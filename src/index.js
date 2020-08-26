@@ -4,7 +4,7 @@ let commonKeyboardOptions = {
     onChange: input => onChange(input),
     onKeyPress: button => onKeyPress(button),
     theme: "simple-keyboard hg-theme-default hg-layout-default myTheme1",
-    physicalKeyboardHighlight: true,
+    physicalKeyboardHighlight: false,
     syncInstanceInputs: true,
     mergeDisplay: true,
     debug: false
@@ -152,7 +152,7 @@ function shoes(value) {
         .forEach(key => {
             let keyEnum = keyEnums[key];
             let color = packages[keyEnum.rg][keyEnum.rv] + packages[keyEnum.bg][keyEnum.bv] + packages[keyEnum.gg][keyEnum.gv]
-            console.log(key + ': ' + color);
+            // console.log(key + ': ' + color);
             const element = elementsByKeys[keyEnum.key];
             setKeyColor(element, color, keyEnum);
         });
