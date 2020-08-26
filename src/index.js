@@ -118,7 +118,39 @@ document.addEventListener("keydown", event => {
 function shoes(value) {
     let lines = value.split('\n')
         .filter(e => !e.endsWith('.'));
+
+    const packages = [];
+    let bytes = [];
     for (const line of lines) {
-        console.log(line)
+        if (line === '') {
+            if (bytes.length > 0) {
+                packages.push(bytes);
+                bytes = [];
+            }
+        } else {
+            line.split(' ')
+                .filter(e => e !== '')
+                .map(e => e.replace('0x', '')) // remove hex part
+                .forEach(byte => bytes.push(byte));
+        }
     }
+    const elementsByKeys = {};
+    let element1 = document.querySelectorAll(`[data-skbtn]`);
+    let map = [...element1]
+        .forEach(e => {
+            elementsByKeys[e.attributes['data-skbtn'].nodeValue] = e;
+        });
+    Object.keys(keyEnums)
+        .forEach(key => {
+            let keyEnum = keyEnums[key];
+            let color = packages[keyEnum.rg][keyEnum.rv] + packages[keyEnum.bg][keyEnum.bv] + packages[keyEnum.gg][keyEnum.gv]
+            console.log(key + ': ' + color);
+            const element = elementsByKeys[keyEnum.key];
+            if (!element) {
+                console.log('cannot find key');
+                console.log(keyEnum);
+            } else {
+                element.style['color'] = `#${color}`;
+            }
+        });
 }
