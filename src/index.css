@@ -2,6 +2,10 @@ body {
     background-color: #0e0e0e;
 }
 
+input {
+    display: none;
+}
+
 .hg-button-escape, .hg-button-f4, .hg-button-f8 {
     margin-right: 15px !important;
 }
@@ -11,7 +15,6 @@ body {
     display: flex;
     justify-content: center;
     width: 1024px;
-    margin: 0 auto;
     border-radius: 5px;
 }
 
@@ -168,4 +171,39 @@ body {
 
 #root .simple-keyboard.myTheme1 + .simple-keyboard-preview {
     background: #1c4995;
+}
+
+.keyboard {
+    margin-top: 50px;
+    display: flex;
+}
+
+.pipeLeft {
+    width: 10px;
+    margin-left: auto;
+    margin-right: 5px;
+    border-top-left-radius: 100%;
+    border-bottom-left-radius: 100%;
+    z-index: -1;
+}
+
+.pipeRight {
+    width: 10px;
+    margin-right: auto;
+    margin-left: 5px;
+    border-top-right-radius: 100%;
+    border-bottom-right-radius: 100%;
+    z-index: -1;
+}
+
+select, textarea {
+    height: 300px;
+}
+
+textarea {
+    width: 450px;
+}
+
+select {
+    margin-right: auto;
 }

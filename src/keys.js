@@ -106,8 +106,8 @@ const keyEnums = Object.freeze({
     _RIGHT: {key: '{arrowright}', rg: 8, rv: 22, gg: 13, gv: 10, bg: 10, bv: 46},
     _NUM_0: {key: '{numpad0}', rg: 8, rv: 25, gg: 13, gv: 13, bg: 10, bv: 49},
     _NUM_DOT: {key: '{numpaddecimal}', rg: 8, rv: 16, gg: 13, gv: 4, bg: 10, bv: 40},
-    _PIPE_LT: {key: 'PIPE_LT', rg: 6, rv: 40, gg: 11, gv: 28, bg: 9, bv: 4},
-    _PIPE_LB: {key: 'PIPE_LB', rg: 6, rv: 46, gg: 11, gv: 34, bg: 9, bv: 10},
-    _PIPE_RT: {key: 'PIPE_RT', rg: 8, rv: 7, gg: 12, gv: 55, bg: 10, bv: 31},
-    _PIPE_RB: {key: 'PIPE_RB', rg: 6, rv: 55, gg: 11, gv: 43, bg: 9, bv: 19}
+    _PIPE_LT: {key: '{pipeleft}', rg: 6, rv: 40, gg: 11, gv: 28, bg: 9, bv: 4},
+    _PIPE_LB: {key: '{pipe_lb}', rg: 6, rv: 46, gg: 11, gv: 34, bg: 9, bv: 10},
+    _PIPE_RT: {key: '{piperight}', rg: 8, rv: 7, gg: 12, gv: 55, bg: 10, bv: 31},
+    _PIPE_RB: {key: '{pipe_lb}', rg: 6, rv: 55, gg: 11, gv: 43, bg: 9, bv: 19}
 });

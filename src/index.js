@@ -115,7 +115,19 @@ document.addEventListener("keydown", event => {
     // event.preventDefault();
 });
 
+
+function profileSelected(elem) {
+    let selectedElement = elem[elem.selectedIndex].value;
+    document.querySelector('textarea').value = selectedElement;
+    shoes(selectedElement);
+}
+
 function shoes(value) {
+
+    let pcks = precomputePackages();
+    Object.keys(pcks)
+        .forEach(pck => setKeyColor(pcks[pck], '000'));
+
     let lines = value.split('\n')
         .filter(e => !e.endsWith('.'));
 
@@ -134,23 +146,45 @@ function shoes(value) {
                 .forEach(byte => bytes.push(byte));
         }
     }
-    const elementsByKeys = {};
-    let element1 = document.querySelectorAll(`[data-skbtn]`);
-    let map = [...element1]
-        .forEach(e => {
-            elementsByKeys[e.attributes['data-skbtn'].nodeValue] = e;
-        });
+
+    const elementsByKeys = pcks;
     Object.keys(keyEnums)
         .forEach(key => {
             let keyEnum = keyEnums[key];
             let color = packages[keyEnum.rg][keyEnum.rv] + packages[keyEnum.bg][keyEnum.bv] + packages[keyEnum.gg][keyEnum.gv]
             console.log(key + ': ' + color);
             const element = elementsByKeys[keyEnum.key];
-            if (!element) {
-                console.log('cannot find key');
-                console.log(keyEnum);
-            } else {
-                element.style['color'] = `#${color}`;
-            }
+            setKeyColor(element, color, keyEnum);
         });
 }
+
+function setKeyColor(element, color, keyEnum) {
+    if (!element) {
+        console.log('cannot find key');
+        console.log(keyEnum);
+    } else {
+        element.style['color'] = `#${color}`;
+        const defaultBoxShadow = defaultBoxShadows[element.attributes['data-skbtn'].nodeValue] || '0 0 3px';
+        element.style['box-shadow'] = `${defaultBoxShadow} #${color}`;
+    }
+}
+
+function precomputePackages() {
+    const elementsByKeys = {};
+    let element1 = document.querySelectorAll(`[data-skbtn]`);
+    let map = [...element1]
+        .forEach(e => {
+            elementsByKeys[e.attributes['data-skbtn'].nodeValue] = e;
+        });
+    return elementsByKeys;
+}
+
+const defaultBoxShadows = {
+    '{pipeleft}': '10px 0 10px',
+    '{piperight}': '-10px 0 10px',
+}
+
+
+let profileElements = document.getElementById('profiles');
+Object.keys(profiles)
+    .forEach(e => profileElements.add(new Option(e, profiles[e])));
