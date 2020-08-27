@@ -1,7 +1,7 @@
 let Keyboard = window.SimpleKeyboard.default;
 
 let commonKeyboardOptions = {
-    theme: "simple-keyboard hg-theme-default hg-layout-default",
+    theme: "simple-keyboard hg-theme-default",
     mergeDisplay: true
 };
 
