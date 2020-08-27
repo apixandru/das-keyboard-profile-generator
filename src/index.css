@@ -147,8 +147,11 @@ body {
     color: white;
 }
 
+.keyboard {
+    padding-top: 30px;
+}
+
 .padded {
-    padding-top: 50px;
     padding-bottom: 50px;
     display: flex;
 }
