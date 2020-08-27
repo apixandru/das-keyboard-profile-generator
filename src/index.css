@@ -146,35 +146,14 @@ input {
     width: 350px;
 }
 
-/*
-  Theme: myTheme1
-*/
-.simple-keyboard.myTheme1 {
-    /*border-radius: 0;*/
-    /*border-bottom-right-radius: 5px;*/
-    /*border-bottom-left-radius: 5px;*/
-}
-
 .simple-keyboard.myTheme1 .hg-button {
-    /*height: 50px;*/
-    /*display: flex;*/
-    /*justify-content: center;*/
-    /*align-items: center;*/
     background: rgba(0, 0, 0, 0.5);
     color: white;
 }
 
-.simple-keyboard.myTheme1 .hg-button:active {
-    background: #1c4995;
-    color: white;
-}
-
-#root .simple-keyboard.myTheme1 + .simple-keyboard-preview {
-    background: #1c4995;
-}
-
-.keyboard {
-    margin-top: 50px;
+.padded {
+    padding-top: 50px;
+    padding-bottom: 50px;
     display: flex;
 }
 
@@ -206,4 +185,19 @@ textarea {
 
 select {
     margin-right: auto;
+}
+
+.selected, .simple-keyboard.myTheme1 .hg-button.selected {
+    background: #7fa0eb;
+}
+
+.selection {
+    background: rgba(46, 115, 252, 0.11);
+    border-radius: 0.1em;
+    border: 2px solid rgba(98, 155, 255, 0.81);
+}
+
+.simple-keyboard.myTheme1 .hg-button:active {
+    background: #7fa0eb;
+    color: white;
 }

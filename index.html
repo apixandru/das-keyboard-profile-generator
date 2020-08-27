@@ -10,7 +10,7 @@
 
 <input class="input"/>
 
-<div class="keyboard">
+<div class="padded keyboard">
     <div class="pipeLeft" data-skbtn="{pipeleft}"></div>
     <div class="keyboardContainer">
         <div class="simple-keyboard-main"></div>
@@ -28,7 +28,8 @@
     </div>
     <div class="pipeRight" data-skbtn="{piperight}"></div>
 </div>
-<div class="keyboard" style="width:100%; margin-top: 50px">
+
+<div class="padded" style="width:100%; margin-top: 50px">
     <div style="text-align: center; margin-left: auto">
         <textarea onchange="shoes(this.value)"></textarea>
     </div>
@@ -36,8 +37,9 @@
     </select>
 </div>
 
-
+<script src="lib/selection/selection.min.js"></script>
 <script src="lib/simple-keyboard/index.js"></script>
+<script src="src/code.js"></script>
 <script src="src/profiles.js"></script>
 <script src="src/keys.js"></script>
 <script src="src/index.js"></script>
