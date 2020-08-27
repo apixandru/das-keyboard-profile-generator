@@ -1,9 +1,23 @@
 function deselectAll(selected, inst) {
     for (const el of selected) {
-        el.classList.remove('selected');
+        deselectElement(el);
         inst.removeFromSelection(el);
     }
     inst.clearSelection();
+}
+
+function deselectElement(el) {
+    let allColor = all_colors[el.attributes['data-skbtn'].nodeValue];
+    el.style['color'] = allColor.color;
+    el.style['background-color'] = 'rgba(0, 0, 0, 0.5)';
+    el.classList.remove('selected');
+}
+
+function selectElement(el) {
+    let allColor = all_colors[el.attributes['data-skbtn'].nodeValue];
+    el.style['background-color'] = allColor.color;
+    el.style['color'] = allColor.inverse;
+    el.classList.add('selected');
 }
 
 Selection.create({
@@ -18,13 +32,13 @@ Selection.create({
 }).on('move', ({changed: {removed, added}}) => {
     // Add a custom class to the elements that where selected.
     for (const el of added) {
-        el.classList.add('selected');
+        selectElement(el);
     }
 
     // Remove the class from elements that where removed
     // since the last selection
     for (const el of removed) {
-        el.classList.remove('selected');
+        deselectElement(el);
     }
 
 }).on('stop', ({inst}) => {

@@ -124,7 +124,11 @@ function shoes(value) {
         .forEach(key => {
             let keyEnum = keyEnums[key];
             let color = packages[keyEnum.rg][keyEnum.rv] + packages[keyEnum.bg][keyEnum.bv] + packages[keyEnum.gg][keyEnum.gv]
-            // console.log(key + ': ' + color);
+            let allColors = all_colors[keyEnum.key];
+            if (allColors) {
+                allColors.color = color;
+                allColors.inverse = invertColor(color);
+            }
             const element = elementsByKeys[keyEnum.key];
             setKeyColor(element, color, keyEnum);
         });
@@ -134,10 +138,13 @@ function setKeyColor(element, color, keyEnum) {
     if (!element) {
         console.log('cannot find key');
         console.log(keyEnum);
-    } else {
-        element.style['color'] = `#${color}`;
-        const defaultBoxShadow = defaultBoxShadows[element.attributes['data-skbtn'].nodeValue] || '0 0 3px';
-        element.style['box-shadow'] = `${defaultBoxShadow} #${color}`;
+        return;
+    }
+    element.style['color'] = `#${color}`;
+    const defaultBoxShadow = defaultBoxShadows[element.attributes['data-skbtn'].nodeValue] || '0 0 3px';
+    element.style['box-shadow'] = `${defaultBoxShadow} #${color}`;
+    if (element.classList.contains('selected')) {
+        selectElement(element);
     }
 }
 
@@ -151,6 +158,44 @@ function precomputePackages() {
     return elementsByKeys;
 }
 
+function colors() {
+    const elementsByKeys = {};
+    let element1 = document.querySelectorAll(`[data-skbtn]`);
+    let map = [...element1]
+        .forEach(e => {
+            elementsByKeys[e.attributes['data-skbtn'].nodeValue] = {
+                color: 'ffffff',
+                inverse: '000000'
+            };
+        });
+    return elementsByKeys;
+}
+
+function invertColor(hex) {
+    if (hex.indexOf('#') === 0) {
+        hex = hex.slice(1);
+    }
+    // convert 3-digit hex to 6-digits.
+    if (hex.length === 3) {
+        hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+    }
+    if (hex.length !== 6) {
+        throw new Error('Invalid HEX color.');
+    }
+    // invert color components
+    var r = (255 - parseInt(hex.slice(0, 2), 16)).toString(16),
+        g = (255 - parseInt(hex.slice(2, 4), 16)).toString(16),
+        b = (255 - parseInt(hex.slice(4, 6), 16)).toString(16);
+    // pad each with zeros and return
+    return '#' + padZero(r) + padZero(g) + padZero(b);
+}
+
+function padZero(str, len) {
+    len = len || 2;
+    var zeros = new Array(len).join('0');
+    return (zeros + str).slice(-len);
+}
+
 const defaultBoxShadows = {
     '{pipeleft}': '10px 0 10px',
     '{piperight}': '-10px 0 10px',
@@ -159,3 +204,10 @@ const defaultBoxShadows = {
 let profileElements = document.getElementById('profiles');
 Object.keys(profiles)
     .forEach(e => profileElements.add(new Option(e, profiles[e])));
+
+all_colors = colors();
+
+let pcks = precomputePackages();
+Object.keys(pcks)
+    .forEach(pck => setKeyColor(pcks[pck], 'fff'));
+
