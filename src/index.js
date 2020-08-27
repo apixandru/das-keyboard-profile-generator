@@ -114,7 +114,6 @@ function shoes(value) {
         } else {
             line.split(' ')
                 .filter(e => e !== '')
-                .map(e => e.replace('0x', '')) // remove hex part
                 .forEach(byte => bytes.push(byte));
         }
     }
