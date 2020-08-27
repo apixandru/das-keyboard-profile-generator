@@ -1,8 +1,6 @@
 let Keyboard = window.SimpleKeyboard.default;
 
 let commonKeyboardOptions = {
-    onChange: input => onChange(input),
-    onKeyPress: button => onKeyPress(button),
     theme: "simple-keyboard hg-theme-default hg-layout-default myTheme1",
     physicalKeyboardHighlight: false,
     syncInstanceInputs: true,
@@ -93,29 +91,6 @@ let keyboardNumPadEnd = new Keyboard(".simple-keyboard-numpadEnd", {
     }
 });
 
-document.querySelector(".input").addEventListener("input", event => {
-    let input = document.querySelector(".input").value;
-    keyboard.setInput(input);
-});
-
-
-function onChange(input) {
-    document.querySelector(".input").value = input;
-    keyboard.setInput(input);
-
-    console.log("Input changed", input);
-}
-
-function onKeyPress(button) {
-    console.log(button);
-}
-
-document.addEventListener("keydown", event => {
-    // console.log(event);
-    // event.preventDefault();
-});
-
-
 function profileSelected(elem) {
     let selectedElement = elem[elem.selectedIndex].value;
     document.querySelector('textarea').value = selectedElement;
@@ -183,7 +158,6 @@ const defaultBoxShadows = {
     '{pipeleft}': '10px 0 10px',
     '{piperight}': '-10px 0 10px',
 }
-
 
 let profileElements = document.getElementById('profiles');
 Object.keys(profiles)
