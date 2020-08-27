@@ -1,11 +1,8 @@
 let Keyboard = window.SimpleKeyboard.default;
 
 let commonKeyboardOptions = {
-    theme: "simple-keyboard hg-theme-default hg-layout-default myTheme1",
-    physicalKeyboardHighlight: false,
-    syncInstanceInputs: true,
-    mergeDisplay: true,
-    debug: false
+    theme: "simple-keyboard hg-theme-default hg-layout-default",
+    mergeDisplay: true
 };
 
 let keyboard = new Keyboard(".simple-keyboard-main", {

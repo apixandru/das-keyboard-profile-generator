@@ -142,7 +142,7 @@ body {
     width: 350px;
 }
 
-.simple-keyboard.myTheme1 .hg-button {
+.simple-keyboard .hg-button {
     background: rgba(0, 0, 0, 0.5);
     color: white;
 }
@@ -183,7 +183,7 @@ select {
     margin-right: auto;
 }
 
-.selected, .simple-keyboard.myTheme1 .hg-button.selected {
+.selected, .simple-keyboard .hg-button.selected {
     background: #7fa0eb;
 }
 
@@ -193,7 +193,7 @@ select {
     border: 2px solid rgba(98, 155, 255, 0.81);
 }
 
-.simple-keyboard.myTheme1 .hg-button:active {
+.simple-keyboard .hg-button:active {
     background: #7fa0eb;
     color: white;
 }
