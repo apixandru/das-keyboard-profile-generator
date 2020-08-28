@@ -20,15 +20,19 @@ function selectElement(el) {
     el.classList.add('selected');
 }
 
+function deselectAllUnlessCtrlPressed(inst, selected, oe) {
+    // Remove class if the user isn't pressing the control key or ⌘ key
+    if (!oe.ctrlKey && !oe.metaKey) {
+        deselectAll(selected, inst);
+    }
+}
+
 Selection.create({
     class: 'selection',
     selectables: ['.hg-button', '.pipeLeft', '.pipeRight'],
     boundaries: ['.keyboard']
 }).on('start', ({inst, selected, oe}) => {
-    // Remove class if the user isn't pressing the control key or ⌘ key
-    if (!oe.ctrlKey && !oe.metaKey) {
-        deselectAll(selected, inst);
-    }
+    deselectAllUnlessCtrlPressed(inst, selected, oe);
 }).on('move', ({changed: {removed, added}}) => {
     // Add a custom class to the elements that where selected.
     for (const el of added) {
@@ -43,6 +47,6 @@ Selection.create({
 
 }).on('stop', ({inst}) => {
     inst.keepSelection();
-}).on('beforestart', ({inst, selected}) => {
-    deselectAll(selected, inst);
+}).on('beforestart', ({inst, selected, oe}) => {
+    deselectAllUnlessCtrlPressed(inst, selected, oe)
 });
