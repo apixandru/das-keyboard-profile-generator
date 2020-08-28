@@ -100,29 +100,18 @@ function shoes(value) {
     Object.keys(pcks)
         .forEach(pck => setKeyColor(pcks[pck], '000'));
 
-    let lines = value.split('\n')
-        .filter(e => !e.endsWith('.'));
-
-    const packages = [];
-    let bytes = [];
-    for (const line of lines) {
-        if (line === '') {
-            if (bytes.length > 0) {
-                packages.push(bytes);
-                bytes = [];
-            }
-        } else {
-            line.split(' ')
-                .filter(e => e !== '')
-                .forEach(byte => bytes.push(byte));
-        }
-    }
+    let packages = base64ToArrayBuffer(value);
 
     const elementsByKeys = pcks;
     Object.keys(keyEnums)
         .forEach(key => {
             let keyEnum = keyEnums[key];
-            let color = packages[keyEnum.rg][keyEnum.rv] + packages[keyEnum.bg][keyEnum.bv] + packages[keyEnum.gg][keyEnum.gv]
+            let color = rgbToHex(
+                packages[keyEnum.rg * 64 + keyEnum.rv],
+                packages[keyEnum.bg * 64 + keyEnum.bv],
+                packages[keyEnum.gg * 64 + keyEnum.gv]);
+
+            console.log(keyEnum.key + '  ' + color)
             let allColors = all_colors[keyEnum.key];
             if (allColors) {
                 allColors.color = color;
@@ -149,8 +138,8 @@ function setKeyColor(element, color, keyEnum) {
 
 function precomputePackages() {
     const elementsByKeys = {};
-    let element1 = document.querySelectorAll(`[data-skbtn]`);
-    let map = [...element1]
+    let colorable = document.querySelectorAll(`[data-skbtn]`);
+    [...colorable]
         .forEach(e => {
             elementsByKeys[e.attributes['data-skbtn'].nodeValue] = e;
         });

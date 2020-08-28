@@ -9,8 +9,7 @@ function base64ToArrayBuffer(base64) {
 }
 
 function rgbToHex(r, g, b) {
-
-    return '#' + pad(r) + pad(g) + pad(b);
+    return padHex(r) + padHex(g) + padHex(b);
 }
 
 function invertRgbHex(hex) {
