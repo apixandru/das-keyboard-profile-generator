@@ -7,14 +7,14 @@ function deselectAll(selected, inst) {
 }
 
 function deselectElement(el) {
-    let allColor = all_colors[el.attributes['data-skbtn'].nodeValue];
+    let allColor = all_colors[extractKey(el)];
     el.style['color'] = allColor.color;
     el.style['background-color'] = 'rgba(0, 0, 0, 0.5)';
     el.classList.remove('selected');
 }
 
 function selectElement(el) {
-    let allColor = all_colors[el.attributes['data-skbtn'].nodeValue];
+    let allColor = all_colors[extractKey(el)];
     el.style['background-color'] = allColor.color;
     el.style['color'] = allColor.inverse;
     el.classList.add('selected');

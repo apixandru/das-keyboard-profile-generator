@@ -129,7 +129,7 @@ function setKeyColor(element, color, keyEnum) {
         return;
     }
     element.style['color'] = `#${color}`;
-    const defaultBoxShadow = defaultBoxShadows[element.attributes['data-skbtn'].nodeValue] || '0 0 3px';
+    const defaultBoxShadow = defaultBoxShadows[extractKey(element)] || '0 0 3px';
     element.style['box-shadow'] = `${defaultBoxShadow} #${color}`;
     if (element.classList.contains('selected')) {
         selectElement(element);
@@ -141,20 +141,22 @@ function precomputePackages() {
     let colorable = document.querySelectorAll(`[data-skbtn]`);
     [...colorable]
         .forEach(e => {
-            elementsByKeys[e.attributes['data-skbtn'].nodeValue] = e;
+            elementsByKeys[extractKey(e)] = e;
         });
     return elementsByKeys;
+}
+
+function extractKey(element) {
+    return element.attributes['data-skbtn'].nodeValue;
 }
 
 function colors() {
     const elementsByKeys = {};
     let element1 = document.querySelectorAll(`[data-skbtn]`);
     let map = [...element1]
-        .forEach(e => {
-            elementsByKeys[e.attributes['data-skbtn'].nodeValue] = {
-                color: 'ffffff',
-                inverse: '000000'
-            };
+        .forEach(e => elementsByKeys[extractKey(e)] = {
+            color: 'ffffff',
+            inverse: '000000'
         });
     return elementsByKeys;
 }
@@ -174,3 +176,20 @@ let pcks = precomputePackages();
 Object.keys(pcks)
     .forEach(pck => setKeyColor(pcks[pck], 'fff'));
 
+function colorChanged(what) {
+    let newColor = removeHash(what.value);
+    console.log(newColor);
+    let elementNodeListOf = document.querySelectorAll('.selected');
+    [...elementNodeListOf]
+        .forEach(element => {
+            const keyEnum = extractKey(element);
+            let allColors = all_colors[keyEnum];
+            if (allColors) {
+                allColors.color = newColor;
+                allColors.inverse = invertRgbHex(newColor);
+            }
+            setKeyColor(element, newColor, keyEnum);
+        });
+
+
+}
