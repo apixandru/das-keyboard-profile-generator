@@ -19,21 +19,16 @@ function removeHash(hex) {
     return hex;
 }
 
+function flipByte(hex, start, end) {
+    const hexByte = hex.slice(start, end);
+    return 255 - parseInt(hexByte, 16);
+}
+
 function invertRgbHex(hex) {
-    hex = removeHash(hex);
-    // convert 3-digit hex to 6-digits.
-    if (hex.length === 3) {
-        hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
-    }
-    if (hex.length !== 6) {
-        throw new Error('Invalid HEX color.');
-    }
-    // invert color components
-    var r = (255 - parseInt(hex.slice(0, 2), 16)).toString(16),
-        g = (255 - parseInt(hex.slice(2, 4), 16)).toString(16),
-        b = (255 - parseInt(hex.slice(4, 6), 16)).toString(16);
-    // pad each with zeros and return
-    return '#' + padHex(r) + padHex(g) + padHex(b);
+    const r = flipByte(hex, 0, 2),
+        g = flipByte(hex, 2, 4),
+        b = flipByte(hex, 4, 6);
+    return rgbToHex(r, g, b);
 }
 
 function padHex(str) {

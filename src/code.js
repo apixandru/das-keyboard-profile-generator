@@ -31,22 +31,11 @@ Selection.create({
     class: 'selection',
     selectables: ['.hg-button', '.pipeLeft', '.pipeRight'],
     boundaries: ['.keyboard']
-}).on('start', ({inst, selected, oe}) => {
-    deselectAllUnlessCtrlPressed(inst, selected, oe);
-}).on('move', ({changed: {removed, added}}) => {
-    // Add a custom class to the elements that where selected.
-    for (const el of added) {
-        selectElement(el);
-    }
-
-    // Remove the class from elements that where removed
-    // since the last selection
-    for (const el of removed) {
-        deselectElement(el);
-    }
-
-}).on('stop', ({inst}) => {
-    inst.keepSelection();
 }).on('beforestart', ({inst, selected, oe}) => {
     deselectAllUnlessCtrlPressed(inst, selected, oe)
+}).on('stop', ({inst}) => {
+    inst.keepSelection();
+}).on('move', ({changed: {removed, added}}) => {
+    added.forEach(addedElement => selectElement(addedElement));
+    removed.forEach(removedElement => deselectElement(removedElement));
 });

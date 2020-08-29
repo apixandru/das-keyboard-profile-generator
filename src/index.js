@@ -111,7 +111,6 @@ function shoes(value) {
                 packages[keyEnum.green],
                 packages[keyEnum.blue]);
 
-            console.log(keyEnum.key + '  ' + color)
             let allColors = all_colors[keyEnum.key];
             if (allColors) {
                 allColors.color = color;
