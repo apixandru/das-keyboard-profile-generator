@@ -107,9 +107,9 @@ function shoes(value) {
         .forEach(key => {
             let keyEnum = keyEnums[key];
             let color = rgbToHex(
-                packages[keyEnum.rg * 64 + keyEnum.rv],
-                packages[keyEnum.bg * 64 + keyEnum.bv],
-                packages[keyEnum.gg * 64 + keyEnum.gv]);
+                packages[keyEnum.red],
+                packages[keyEnum.green],
+                packages[keyEnum.blue]);
 
             console.log(keyEnum.key + '  ' + color)
             let allColors = all_colors[keyEnum.key];
