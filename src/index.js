@@ -176,8 +176,8 @@ const defaultBoxShadows = {
 }
 
 let profileElements = document.getElementById('profiles');
-Object.keys(profiles)
-    .forEach(e => profileElements.add(new Option(e, profiles[e])));
+Object.keys(builtinProfiles)
+    .forEach(e => profileElements.add(new Option(e, builtinProfiles[e])));
 
 all_colors = colors();
 
@@ -212,15 +212,6 @@ function colorChanged(hashedColor) {
         });
 
     setRawProfile(profile);
-}
-
-function arrayBufferToBase64(bytes) {
-    let binary = '';
-    let len = bytes.byteLength;
-    for (let i = 0; i < len; i++) {
-        binary += String.fromCharCode(bytes[i]);
-    }
-    return btoa(binary);
 }
 
 function setAllKeyColorsTo(color) {

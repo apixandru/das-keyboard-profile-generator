@@ -1,11 +1,20 @@
 function base64ToArrayBuffer(base64) {
-    var binary_string = window.atob(base64);
-    var len = binary_string.length;
-    var bytes = new Uint8Array(len);
-    for (var i = 0; i < len; i++) {
+    const binary_string = window.atob(base64);
+    const len = binary_string.length;
+    const bytes = new Uint8Array(len);
+    for (let i = 0; i < len; i++) {
         bytes[i] = binary_string.charCodeAt(i);
     }
     return bytes;
+}
+
+function arrayBufferToBase64(bytes) {
+    let binary = '';
+    let len = bytes.byteLength;
+    for (let i = 0; i < len; i++) {
+        binary += String.fromCharCode(bytes[i]);
+    }
+    return btoa(binary);
 }
 
 function rgbToHex(r, g, b) {
@@ -14,13 +23,9 @@ function rgbToHex(r, g, b) {
 
 function removeHash(hex) {
     if (hex.indexOf('#') === 0) {
-        hex = hex.slice(1);
+        return hex.slice(1);
     }
     return hex;
-}
-
-function flipByte(byte) {
-    return 255 - byte;
 }
 
 function extractByte(hex, start, end) {
@@ -31,9 +36,9 @@ function extractByte(hex, start, end) {
 function invertRgbHex(hex) {
     const bytes = extractRgb(hex);
     return rgbToHex(
-        flipByte(bytes.red),
-        flipByte(bytes.green),
-        flipByte(bytes.blue)
+        255 - bytes.red,
+        255 - bytes.green,
+        255 - bytes.blue
     );
 }
 
@@ -49,4 +54,3 @@ function padHex(str) {
     return ('0' + str.toString(16))
         .slice(-2);
 }
-

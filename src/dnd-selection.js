@@ -21,7 +21,6 @@ function selectElement(el) {
 }
 
 function deselectAllUnlessCtrlPressed(inst, selected, oe) {
-    // Remove class if the user isn't pressing the control key or ⌘ key
     if (!oe.ctrlKey && !oe.metaKey) {
         deselectAll(selected, inst);
     }
