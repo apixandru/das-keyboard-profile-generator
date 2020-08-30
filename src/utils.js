@@ -19,16 +19,30 @@ function removeHash(hex) {
     return hex;
 }
 
-function flipByte(hex, start, end) {
+function flipByte(byte) {
+    return 255 - byte;
+}
+
+function extractByte(hex, start, end) {
     const hexByte = hex.slice(start, end);
-    return 255 - parseInt(hexByte, 16);
+    return parseInt(hexByte, 16);
 }
 
 function invertRgbHex(hex) {
-    const r = flipByte(hex, 0, 2),
-        g = flipByte(hex, 2, 4),
-        b = flipByte(hex, 4, 6);
-    return rgbToHex(r, g, b);
+    const bytes = extractRgb(hex);
+    return rgbToHex(
+        flipByte(bytes.red),
+        flipByte(bytes.green),
+        flipByte(bytes.blue)
+    );
+}
+
+function extractRgb(hex) {
+    return {
+        red: extractByte(hex, 0, 2),
+        green: extractByte(hex, 2, 4),
+        blue: extractByte(hex, 4, 6)
+    };
 }
 
 function padHex(str) {

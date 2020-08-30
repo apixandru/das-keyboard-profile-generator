@@ -88,10 +88,14 @@ let keyboardNumPadEnd = new Keyboard(".simple-keyboard-numpadEnd", {
     }
 });
 
+function setProfileText(profileText) {
+    document.querySelector('textarea').value = profileText;
+    shoes(profileText);
+}
+
 function profileSelected(elem) {
     let selectedElement = elem[elem.selectedIndex].value;
-    document.querySelector('textarea').value = selectedElement;
-    shoes(selectedElement);
+    setProfileText(selectedElement);
 }
 
 function shoes(value) {
@@ -175,20 +179,42 @@ let pcks = precomputePackages();
 Object.keys(pcks)
     .forEach(pck => setKeyColor(pcks[pck], 'fff'));
 
-function colorChanged(what) {
-    let newColor = removeHash(what.value);
-    console.log(newColor);
-    let elementNodeListOf = document.querySelectorAll('.selected');
-    [...elementNodeListOf]
-        .forEach(element => {
-            const keyEnum = extractKey(element);
-            let allColors = all_colors[keyEnum];
-            if (allColors) {
-                allColors.color = newColor;
-                allColors.inverse = invertRgbHex(newColor);
-            }
-            setKeyColor(element, newColor, keyEnum);
+function colorChanged(hashedColor) {
+    const newColor = removeHash(hashedColor);
+
+    const profile = base64ToArrayBuffer(document.querySelector('textarea').value);
+
+    const selectedKeys = [...document.querySelectorAll('.selected')]
+        .map(e => extractKey(e));
+
+    const rgb = extractRgb(newColor);
+
+    Object.keys(keyEnums)
+        .map(e => keyEnums[e])
+        .filter(e => selectedKeys.includes(e.key))
+        .forEach(e => {
+            // active
+            profile[e.red] = rgb.red;
+            profile[e.green] = rgb.green;
+            profile[e.blue] = rgb.blue;
+
+            // passive
+            profile[e.red + 704] = rgb.red;
+            profile[e.green + 704] = rgb.green;
+            profile[e.blue + 704] = rgb.blue;
         });
 
-
+    let encodedProfile = arrayBufferToBase64(profile);
+    setProfileText(encodedProfile);
 }
+
+function arrayBufferToBase64(bytes) {
+    let binary = '';
+    let len = bytes.byteLength;
+    for (let i = 0; i < len; i++) {
+        binary += String.fromCharCode(bytes[i]);
+    }
+    return btoa(binary);
+}
+
+setProfileText(arrayBufferToBase64(buildProfileAllWhite()));
