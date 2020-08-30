@@ -121,29 +121,13 @@ function setProfileBytes(packages) {
                 allColors.color = color;
                 allColors.inverse = invertRgbHex(color);
             }
-            const element = elements_by_keys[keyEnum.key];
-            doSetKeyColor(element, keyEnum, allColors);
         });
-}
-
-function setKeyColor(element, color, keyEnum) {
-    if (!element) {
-        console.log('cannot find key');
-        console.log(keyEnum);
-        return;
-    }
-    element.style['color'] = `#${color}`;
-    const defaultBoxShadow = defaultBoxShadows[extractKey(element)] || '0 0 3px';
-    element.style['box-shadow'] = `${defaultBoxShadow} #${color}`;
-    if (isSelected(element)) {
-        selectElement(element);
-    }
+    redraw();
 }
 
 function doSetKeyColor(element, keyEnum, allColor) {
     if (!element) {
-        console.log('cannot find key');
-        console.log(keyEnum);
+        console.log('cannot find ' + keyEnum.key);
         return;
     }
     const defaultBoxShadow = defaultBoxShadows[extractKey(element)] || '0 0 3px';

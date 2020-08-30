@@ -4,11 +4,11 @@ function deselectAll(selected, inst) {
         inst.removeFromSelection(el);
     }
     inst.clearSelection();
+    redraw();
 }
 
 function deselectElement(el) {
     el.classList.remove('selected');
-    redraw();
 }
 
 function isSelected(element) {
@@ -17,7 +17,6 @@ function isSelected(element) {
 
 function selectElement(el) {
     el.classList.add('selected');
-    redraw();
 }
 
 function deselectAllUnlessCtrlPressed(inst, selected, oe) {
@@ -37,4 +36,5 @@ Selection.create({
 }).on('move', ({changed: {removed, added}}) => {
     added.forEach(addedElement => selectElement(addedElement));
     removed.forEach(removedElement => deselectElement(removedElement));
+    redraw();
 });
