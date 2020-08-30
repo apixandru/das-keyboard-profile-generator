@@ -162,7 +162,7 @@ function extractKey(element) {
 function colors() {
     const elementsByKeys = {};
     let element1 = document.querySelectorAll(`[data-skbtn]`);
-    let map = [...element1]
+    [...element1]
         .forEach(e => elementsByKeys[extractKey(e)] = {
             color: 'ffffff',
             inverse: '000000'
@@ -180,10 +180,6 @@ Object.keys(builtinProfiles)
     .forEach(e => profileElements.add(new Option(e, builtinProfiles[e])));
 
 all_colors = colors();
-
-let pcks = precomputePackages();
-Object.keys(pcks)
-    .forEach(pck => setKeyColor(pcks[pck], 'fff'));
 
 function colorChanged(hashedColor) {
     const newColor = removeHash(hashedColor);
