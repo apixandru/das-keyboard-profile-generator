@@ -17,14 +17,15 @@ function buildBaseProfile() {
     return bytes;
 }
 
-function buildProfileAllWhite() {
+function buildProfileAllKeys(color) {
     let profile = buildBaseProfile();
+    let rgb = extractRgb(color);
     Object.keys(keyEnums)
         .map(e => keyEnums[e])
         .forEach(e => {
-            profile[e.red] = 255;
-            profile[e.green] = 255;
-            profile[e.blue] = 255;
+            profile[e.red] = rgb.red;
+            profile[e.green] = rgb.green;
+            profile[e.blue] = rgb.blue;
         });
     return profile;
 }

@@ -223,4 +223,8 @@ function arrayBufferToBase64(bytes) {
     return btoa(binary);
 }
 
-setProfileText(arrayBufferToBase64(buildProfileAllWhite()));
+function setAllKeyColorsTo(color) {
+    setRawProfile(buildProfileAllKeys(color));
+}
+
+setAllKeyColorsTo('ffffff');
