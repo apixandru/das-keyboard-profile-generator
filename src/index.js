@@ -90,7 +90,12 @@ let keyboardNumPadEnd = new Keyboard(".simple-keyboard-numpadEnd", {
 
 function setProfileText(profileText) {
     document.querySelector('textarea').value = profileText;
-    shoes(profileText);
+    parseProfileText(profileText);
+}
+
+function setRawProfile(bytes) {
+    document.querySelector('textarea').value = arrayBufferToBase64(bytes);
+    setProfileBytes(bytes);
 }
 
 function profileSelected(elem) {
@@ -98,13 +103,14 @@ function profileSelected(elem) {
     setProfileText(selectedElement);
 }
 
-function shoes(value) {
+function parseProfileText(value) {
+    setProfileBytes(base64ToArrayBuffer(value));
+}
 
+function setProfileBytes(packages) {
     let pcks = precomputePackages();
     Object.keys(pcks)
         .forEach(pck => setKeyColor(pcks[pck], '000'));
-
-    let packages = base64ToArrayBuffer(value);
 
     const elementsByKeys = pcks;
     Object.keys(keyEnums)
@@ -193,6 +199,7 @@ function colorChanged(hashedColor) {
         .map(e => keyEnums[e])
         .filter(e => selectedKeys.includes(e.key))
         .forEach(e => {
+
             // active
             profile[e.red] = rgb.red;
             profile[e.green] = rgb.green;
@@ -204,8 +211,7 @@ function colorChanged(hashedColor) {
             profile[e.blue + 704] = rgb.blue;
         });
 
-    let encodedProfile = arrayBufferToBase64(profile);
-    setProfileText(encodedProfile);
+    setRawProfile(profile);
 }
 
 function arrayBufferToBase64(bytes) {
