@@ -33,11 +33,6 @@ body {
     background: none;
 }
 
-.simple-keyboard .hg-button.selectedButton {
-    background: rgba(5, 25, 70, 0.53);
-    color: white;
-}
-
 .simple-keyboard .hg-button.emptySpace {
     pointer-events: none;
     background: none;
@@ -131,11 +126,6 @@ body {
 
 .simple-keyboard-numpadEnd.simple-keyboard .hg-button.hg-button-enter {
     height: 85px;
-}
-
-.simple-keyboard.hg-theme-default .hg-button.hg-selectedButton {
-    background: rgba(5, 25, 70, 0.53);
-    color: white;
 }
 
 .hg-button.hg-functionBtn.hg-button-space {
