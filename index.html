@@ -34,7 +34,7 @@
 
 <div class="padded" style="width:100%;">
     <div style="text-align: center; margin-left: auto">
-        <textarea disabled onchange="parseProfileText(this.value)"></textarea>
+        <textarea disabled onchange="setProfileFromText(this.value)"></textarea>
     </div>
     <select id="profiles" onchange="profileSelected(this)" size="3"></select>
 </div>
@@ -42,8 +42,6 @@
 <script src="lib/selection/selection.min.js"></script>
 <script src="lib/simple-keyboard/index.js"></script>
 <script src="src/setup-dependencies.js"></script>
-<script src="src/profile-builder.js"></script>
-<script src="src/utils.js"></script>
 <script src="src/builtin-profiles.js"></script>
 <script src="src/key-definitions.js"></script>
 <script src="src/index.js"></script>
