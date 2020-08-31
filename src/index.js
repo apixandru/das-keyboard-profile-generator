@@ -113,31 +113,34 @@ function extractKey(element) {
     return element.attributes['data-skbtn'].nodeValue;
 }
 
+function applyColorToProfile(currentKey, color, profile) {
+    // active
+    profile[currentKey.red] = color.red;
+    profile[currentKey.green] = color.green;
+    profile[currentKey.blue] = color.blue;
+
+    // passive
+    profile[currentKey.red + 704] = color.red;
+    profile[currentKey.green + 704] = color.green;
+    profile[currentKey.blue + 704] = color.blue;
+}
+
 function colorChanged(hashedColor) {
     const newColor = removeHash(hashedColor);
 
-    const profile = base64ToArrayBuffer(document.querySelector('textarea').value);
+    // TODO store current profile in variable to prevent all this parsing
+    const currentProfileAsText = document.querySelector('textarea').value;
+    const profile = base64ToArrayBuffer(currentProfileAsText);
 
     const selectedKeys = [...document.querySelectorAll('.selected')]
         .map(e => extractKey(e));
 
-    const rgb = extractRgb(newColor);
+    const color = extractRgb(newColor);
 
     Object.keys(keyEnums)
         .map(e => keyEnums[e])
         .filter(e => selectedKeys.includes(e.key))
-        .forEach(e => {
-
-            // active
-            profile[e.red] = rgb.red;
-            profile[e.green] = rgb.green;
-            profile[e.blue] = rgb.blue;
-
-            // passive
-            profile[e.red + 704] = rgb.red;
-            profile[e.green + 704] = rgb.green;
-            profile[e.blue + 704] = rgb.blue;
-        });
+        .forEach(currentKey => applyColorToProfile(currentKey, color, profile));
 
     setProfileBytes(profile);
 }
@@ -218,16 +221,12 @@ function buildBaseProfile() {
     return bytes;
 }
 
-function buildProfileAllKeys(color) {
-    let profile = buildBaseProfile();
-    let rgb = extractRgb(color);
+function buildProfileAllKeys(colorHex) {
+    const profile = buildBaseProfile();
+    const color = extractRgb(colorHex);
     Object.keys(keyEnums)
         .map(e => keyEnums[e])
-        .forEach(e => {
-            profile[e.red] = rgb.red;
-            profile[e.green] = rgb.green;
-            profile[e.blue] = rgb.blue;
-        });
+        .forEach(currentKey => applyColorToProfile(currentKey, color, profile));
     return profile;
 }
 
